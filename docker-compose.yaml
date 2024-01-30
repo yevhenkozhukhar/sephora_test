@@ -1,0 +1,37 @@
+version: '3'
+
+networks:
+  sephora_test:
+
+services:
+  apache-service:
+    build:
+      context: .
+      dockerfile: ./.docker/php-apache/Dockerfile
+    container_name: sephora-apache
+    ports:
+      - "8003:80"
+    restart: on-failure
+    volumes:
+      - './:/var/www/html'
+      - './.docker/php-apache/default.conf:/etc/apache2/sites-available/000-default.conf'
+    depends_on:
+      - mysql-service
+    networks:
+      - sephora_test
+
+  mysql-service:
+    image: mysql:8.0
+    container_name: sephora-mysql
+    restart: always
+    env_file:
+      - ".env"
+    ports:
+      - '33061:3306'
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    volumes:
+      - ./var/data/mysql:/var/lib/mysql
+    networks:
+      - sephora_test

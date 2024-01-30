@@ -1,0 +1,45 @@
+version: '3'
+
+networks:
+  sephora_test:
+
+services:
+  nginx-service:
+    image: nginx:stable-alpine
+    container_name: sephora-nginx
+    ports:
+      - '8080:80'
+    volumes:
+      - './:/var/www/project'
+      - './.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf'
+    depends_on:
+      - php-service
+    networks:
+      - sephora_test
+
+  php-service:
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    container_name: sephora-php
+    restart: on-failure
+    volumes:
+      - './:/var/www/html'
+    networks:
+      - sephora_test
+    depends_on:
+      - mysql-service
+
+  mysql-service:
+    image: mysql:8.0
+    container_name: sephora-mysql
+    restart: always
+    ports:
+      - '33061:3306'
+    environment:
+      - MYSQL_DATABASE=sephora_db
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - ./var/data/mysql:/var/lib/mysql
+    networks:
+      - sephora_test
