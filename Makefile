@@ -1,5 +1,4 @@
 PHP=docker-compose exec apache-service
-#PHP=docker-compose exec php-service php # nginx
 
 start:
 	docker-compose up -d
@@ -24,16 +23,19 @@ migrate:
 down:
 	docker-compose down
 
+deps:
+	@$(MAKE) start
+	@$(MAKE) install
+	@$(MAKE) db
+
 composer-req:
 	$(PHP) composer require $(args)
 
 phpshell:
 	docker-compose exec apache-service bash
-	#docker-compose exec php-service bash # nginx
 
 myshell:
 	docker-compose exec mysql-service mysql -u root -psecret
-
 
 unit:
 	$(PHP) bin/phpunit $(args)

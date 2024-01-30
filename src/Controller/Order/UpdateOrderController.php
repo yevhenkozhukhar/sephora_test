@@ -10,7 +10,6 @@ use App\Infrastructure\Resolver\RequestValidateValueResolver;
 use App\Service\OrderManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +26,6 @@ class UpdateOrderController
     {
         $order = $orderManager->updateOrder($id, $orderDTO);
 
-        return ApiResponseHelper::successResponse($order->jsonSerialize(), Response::HTTP_OK);
+        return ApiResponseHelper::successResponse($order->jsonSerialize());
     }
 }
