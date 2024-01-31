@@ -61,6 +61,11 @@ docker-compose exec apache-service bin/console doctrine:migrations:migrate --env
 
 `make down` - same as `docker-compose down` - down containers
 
+### Load fixtures(demo data) via make
+```
+fixture-load
+```
+
 ### Unit tests
 
 Run via make

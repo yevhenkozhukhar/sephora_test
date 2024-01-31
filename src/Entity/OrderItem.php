@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'sales_order_item')]
-class OrderItem
+class OrderItem implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -64,5 +65,13 @@ class OrderItem
         $this->relatedOrder = $relatedOrder;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'product' => $this->product,
+            'price' => $this->price,
+        ];
     }
 }

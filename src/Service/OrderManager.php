@@ -26,7 +26,7 @@ readonly class OrderManager implements OrderManagerInterface
 
     public function updateOrder(int $id, OrderDTO $orderDTO): OrderDTO
     {
-        $order = $this->orderRepository->findById($id);
+        $order = $this->findOrderById($id);
         $order = $this->orderEntityMapper->readDTO($orderDTO, $order);
         $this->orderRepository->add($order);
 

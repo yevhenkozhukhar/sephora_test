@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Order;
 
 use App\DTO\Request\ListRequestDTO;
+use App\Entity\Order;
+use App\Infrastructure\Reponse\ApiResponseHelper;
 use App\Infrastructure\Resolver\RequestValidateValueResolver;
 use App\Repository\Doctrine\OrderRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[AsController]
-class OrderListController extends AbstractController
+class OrderListController
 {
     #[Route('/api/v1/orders', name: 'api_orders_list', methods: Request::METHOD_GET, format: 'json')]
     public function _invoke(
@@ -24,6 +25,6 @@ class OrderListController extends AbstractController
     ): JsonResponse {
         $orders = $orderRepository->list($listRequestDTO ?? new ListRequestDTO());
 
-        return $this->json(['orders' => $orders]);
+        return ApiResponseHelper::successResponse(array_map(static fn(Order $order) => $order->jsonSerialize(), $orders));
     }
 }

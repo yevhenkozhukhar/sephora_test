@@ -133,7 +133,9 @@ class Order implements JsonSerializable
             'id' => $this->id,
             'currency'  => $this->currency,
             'date' => $this->date?->format(self::DATE_FORMAT),
-            'products'  => $this->products,
+            'products'  => array_map(
+                static fn(OrderItem $orderItem) => $orderItem->jsonSerialize(), $this->products->toArray()
+            ),
             'total'  => $this->total,
         ];
     }

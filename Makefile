@@ -20,6 +20,9 @@ migrate:
 	$(PHP) bin/console doctrine:migrations:migrate --no-interaction
 	$(PHP) bin/console doctrine:migrations:migrate --env=test --no-interaction
 
+fixture-load:
+	$(PHP) bin/console doctrine:fixtures:load
+
 down:
 	docker-compose down
 
