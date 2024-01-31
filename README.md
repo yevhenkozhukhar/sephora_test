@@ -88,3 +88,22 @@ http://localhost:8003
 ```
 http://localhost:8003/api/doc
 ```
+
+### Default user tokens (use for API requests)
+
+```
+advisor_token: ROLE_ADVISOR
+admin_token: ROLE_ADMIN
+developer_token: ROLE_DEVELOPER
+```
+
+Token name in headers:
+```
+X-API-Token: admin_token
+```
+
+Example CURL request:
+```
+curl --location 'http://localhost:8003/api/v1/orders' \
+--header 'X-API-Token: admin_token'
+```
