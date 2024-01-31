@@ -7,11 +7,19 @@ namespace App\Tests\Controller\Order;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Tests\Controller\AbstractApiTestCase;
+use App\Tests\DataFixtures\OrderFixtures;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpdateOrderControllerTest extends AbstractApiTestCase
 {
+    protected function loadFixtures(): array
+    {
+        return [
+            new OrderFixtures(),
+        ];
+    }
+
     public function testAddAction(): void
     {
         $data = [
