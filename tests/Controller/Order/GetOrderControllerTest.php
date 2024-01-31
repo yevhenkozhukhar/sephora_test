@@ -21,7 +21,7 @@ class GetOrderControllerTest extends AbstractApiTestCase
 
     public function testOrderGetAction(): void
     {
-        $this->client->request('GET', '/api/v1/orders/1');
+        $this->client->request('GET', '/api/v1/orders/1', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN]);
         $this->assertResponseIsSuccessful();
         $expected = [
             'status' => 'ok',
@@ -42,7 +42,7 @@ class GetOrderControllerTest extends AbstractApiTestCase
 
     public function testOrderGetActionError(): void
     {
-        $this->client->request('GET', '/api/v1/orders/404');
+        $this->client->request('GET', '/api/v1/orders/404', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN]);
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 

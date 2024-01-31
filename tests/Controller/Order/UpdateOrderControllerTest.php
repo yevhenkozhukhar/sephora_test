@@ -7,11 +7,19 @@ namespace App\Tests\Controller\Order;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Tests\Controller\AbstractApiTestCase;
+use App\Tests\DataFixtures\OrderFixtures;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpdateOrderControllerTest extends AbstractApiTestCase
 {
+    protected function loadFixtures(): array
+    {
+        return [
+            new OrderFixtures(),
+        ];
+    }
+
     public function testAddAction(): void
     {
         $data = [
@@ -24,7 +32,7 @@ class UpdateOrderControllerTest extends AbstractApiTestCase
             'total' => 750
         ];
 
-        $this->client->request(Request::METHOD_PUT, '/api/v1/orders/1', server: ['CONTENT_TYPE' => 'application/json'], content: json_encode($data));
+        $this->client->request(Request::METHOD_PUT, '/api/v1/orders/1', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN], content: json_encode($data));
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $response = json_decode($this->client->getResponse()->getContent(), true);
         $data['id'] = 1;

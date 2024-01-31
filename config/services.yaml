@@ -33,3 +33,7 @@ services:
         arguments:
             - '@App\Infrastructure\Resolver\MapRequestPayloadResolver'
             - '@validator'
+
+    App\Security\ApiTokenUserProvider:
+        arguments:
+            - '%env(json:API_SECRETS_CONFIG)%'

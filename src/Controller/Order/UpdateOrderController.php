@@ -13,10 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
 class UpdateOrderController
 {
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/api/v1/orders/{id}', name: 'api_orders_update', methods: Request::METHOD_PUT, format: 'json')]
     public function __invoke(
         #[MapRequestPayload(acceptFormat: 'json', validationGroups: ['update', 'Default'], resolver: RequestValidateValueResolver::class)] OrderDTO $orderDTO,

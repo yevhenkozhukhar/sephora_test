@@ -9,6 +9,8 @@ use App\Infrastructure\Exception\RequestConstraintValidationException;
 use App\Infrastructure\Reponse\ApiResponseHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -30,7 +32,7 @@ class ApiExceptionListener implements EventSubscriberInterface
                 $this->transformViolationListToArray($error->constraintViolationList())
             ),
             BadApiRequestException::class => ApiResponseHelper::errorResponse($error->getMessage(), [], $error->getCode()),
-            default => ApiResponseHelper::errorResponse($error->getMessage()),
+            default => null,
         };
 
         if ($response) {

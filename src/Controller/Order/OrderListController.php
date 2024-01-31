@@ -14,10 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
 class OrderListController
 {
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/api/v1/orders', name: 'api_orders_list', methods: Request::METHOD_GET, format: 'json')]
     public function _invoke(
         #[MapQueryString(resolver: RequestValidateValueResolver::class)] ?ListRequestDTO $listRequestDTO,

@@ -25,6 +25,8 @@ nelmio_api_doc:
               description: Bad request
             '422':
               description: Validation errors
+          security:
+            - ApiKeyAuth: []
         post:
           operationId: CreateOrder
           summary: Create order
@@ -43,6 +45,8 @@ nelmio_api_doc:
               description: Bad request
             '422':
               description: Validation errors
+          security:
+            - ApiKeyAuth: [ ]
       /api/v1/orders/{id}:
         get:
           operationId: GetOrder
@@ -59,6 +63,8 @@ nelmio_api_doc:
                     $ref: '#/components/schemas/OrderResponse'
             '400':
               description: Bad request
+          security:
+            - ApiKeyAuth: [ ]
         put:
           operationId: UpdateOrder
           summary: Update order
@@ -83,6 +89,8 @@ nelmio_api_doc:
               description: Order not found
             '422':
               description: Validation errors
+          security:
+            - ApiKeyAuth: [ ]
         delete:
           operationId: DeleteOrder
           summary: Delete order
@@ -94,6 +102,8 @@ nelmio_api_doc:
               description: Successful operation
             '404':
               description: Order not found
+          security:
+            - ApiKeyAuth: [ ]
     components:
       schemas:
         OrderResponse:
@@ -144,6 +154,11 @@ nelmio_api_doc:
               type: integer
               format: int64
               example: 1000
+      securitySchemes:
+        ApiKeyAuth:
+          type: apiKey
+          in: header
+          name: X-API-Token
   areas: # to filter documented areas
     disable_default_routes: true
     path_patterns:

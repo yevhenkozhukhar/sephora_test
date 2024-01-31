@@ -14,6 +14,9 @@ use Symfony\Component\Cache\Adapter\PdoAdapter;
 
 class AbstractApiTestCase extends WebTestCase
 {
+    public const DEVELOPER_API_TOKEN = 'developer_token_test';
+    public const ADMIN_API_TOKEN = 'admin_token_test';
+
     protected ?KernelBrowser $client;
 
     protected EntityManagerInterface $entityManager;

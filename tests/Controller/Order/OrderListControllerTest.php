@@ -13,7 +13,7 @@ class OrderListControllerTest extends AbstractApiTestCase
 
     public function testGetOrders(): void
     {
-        $this->client->request('GET', '/api/v1/orders');
+        $this->client->request('GET', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN]);
         // Validate a successful response and some content
         $this->assertResponseIsSuccessful();
         $this->assertJson($this->client->getResponse()->getContent());

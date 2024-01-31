@@ -15,10 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
 class DeleteOrderController
 {
+    #[IsGranted('ROLE_DEVELOPER')]
     #[Route('/api/v1/orders/{id}', name: 'api_orders_delete', methods: Request::METHOD_DELETE, format: 'json')]
     public function _invoke(int $id, OrderManager $orderManager): JsonResponse
     {

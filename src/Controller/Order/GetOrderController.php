@@ -13,10 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
 class GetOrderController
 {
+    #[IsGranted('ROLE_ADVISER')]
     #[Route('/api/v1/orders/{id}', name: 'api_order_get', methods: Request::METHOD_GET, format: 'json')]
     public function _invoke(int $id, OrderManagerInterface $orderManager): JsonResponse
     {

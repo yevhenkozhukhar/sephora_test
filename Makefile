@@ -26,6 +26,9 @@ fixture-load:
 down:
 	docker-compose down
 
+clean:
+	$(PHP) bin/console c:c --env=prod
+
 deps:
 	@$(MAKE) start
 	@$(MAKE) install

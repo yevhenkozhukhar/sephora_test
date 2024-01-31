@@ -7,6 +7,7 @@ namespace App\Tests\Controller\Order;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Tests\Controller\AbstractApiTestCase;
+use phpDocumentor\Reflection\Types\Self_;
 use Symfony\Component\HttpFoundation\Response;
 
 class CreateOrderControllerTest extends AbstractApiTestCase
@@ -23,7 +24,12 @@ class CreateOrderControllerTest extends AbstractApiTestCase
             'total' => 750
         ];
 
-        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json'], content: json_encode($data));
+        $this->client->request(
+            'POST',
+            '/api/v1/orders',
+            server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN],
+            content: json_encode($data),
+        );
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
@@ -31,7 +37,7 @@ class CreateOrderControllerTest extends AbstractApiTestCase
     {
         $data = [];
         //empty request
-        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json'], content: json_encode($data));
+        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN], content: json_encode($data));
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $expectedErrors = [
             'currency' => 'This value should not be blank.',
@@ -54,7 +60,7 @@ class CreateOrderControllerTest extends AbstractApiTestCase
             ],
             'total' => 750
         ];
-        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json'], content: json_encode($data));
+        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN], content: json_encode($data));
         $response = json_decode($this->client->getResponse()->getContent(), true);
         $expectedErrors = [
             'currency' => 'This value should have exactly 3 characters.',
@@ -76,7 +82,7 @@ class CreateOrderControllerTest extends AbstractApiTestCase
             'total' => 850
         ];
 
-        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json'], content: json_encode($data));
+        $this->client->request('POST', '/api/v1/orders', server: ['CONTENT_TYPE' => 'application/json', 'HTTP_X-API-Token' => self::DEVELOPER_API_TOKEN], content: json_encode($data));
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertEquals('Total price not equal products sum total', $response['message']);

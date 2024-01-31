@@ -15,10 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
 class CreateOrderController
 {
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/api/v1/orders', name: 'api_orders_create', methods: Request::METHOD_POST, format: 'json')]
     public function _invoke(
         #[MapRequestPayload(acceptFormat: 'json', validationGroups: ['create', 'Default'], resolver: RequestValidateValueResolver::class)] OrderDTO $orderDTO,
