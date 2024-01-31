@@ -25,6 +25,10 @@ class ApiExceptionListener implements EventSubscriberInterface
 
     public function processException(ExceptionEvent $event): void
     {
+        $path = $event->getRequest()->getPathInfo();
+        if (!str_starts_with($path, '/api/')) {
+            return;
+        }
         $error = $event->getThrowable();
 
         $response = match (get_class($error)) {

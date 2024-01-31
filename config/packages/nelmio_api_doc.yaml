@@ -52,6 +52,14 @@ nelmio_api_doc:
           operationId: GetOrder
           summary: Get order by id
           description: Get order by id
+          parameters:
+            - name: id
+              in: path
+              description: Order ID
+              required: true
+              schema:
+                type: integer
+                format: int64
           tags:
             - Orders
           responses:
@@ -63,12 +71,22 @@ nelmio_api_doc:
                     $ref: '#/components/schemas/OrderResponse'
             '400':
               description: Bad request
+            '404':
+              description: Not found
           security:
             - ApiKeyAuth: [ ]
         put:
           operationId: UpdateOrder
           summary: Update order
           description: Update order by request
+          parameters:
+            - name: id
+              in: path
+              description: Order ID
+              required: true
+              schema:
+                type: integer
+                format: int64
           tags:
             - Orders
           requestBody:
@@ -86,7 +104,7 @@ nelmio_api_doc:
             '400':
               description: Bad request
             '404':
-              description: Order not found
+              description: Not found
             '422':
               description: Validation errors
           security:
@@ -95,13 +113,21 @@ nelmio_api_doc:
           operationId: DeleteOrder
           summary: Delete order
           description: Delete order
+          parameters:
+            - name: id
+              in: path
+              description: Order ID
+              required: true
+              schema:
+                type: integer
+                format: int64
           tags:
             - Orders
           responses:
             '204':
               description: Successful operation
             '404':
-              description: Order not found
+              description: Not found
           security:
             - ApiKeyAuth: [ ]
     components:

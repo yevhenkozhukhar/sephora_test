@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main role="main" class="container mt-5">
+        <div class="starter-template text-center">
+            <h1>Welcome to Order API!</h1>
+            <p class="lead">The project provide simple example of API</p>
+            <div class="text-center mt-3">
+                <a href="{{ path('app.swagger_ui') }}" class="btn btn-primary">API Documentation(Swagger UI)</a>
+            </div>
+        </div>
+    </main>
+{% endblock %}
